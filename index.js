@@ -1,22 +1,23 @@
 const express = require('express');
 
 //const logger = require('./middleware/logger');
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8001;
 
 const datas = require('./test_database');
 
 const app = express();
 
-// Init middleware
+// Logger middleware
 //app.use(logger)
 
-// Body-parser Middleware for POST
+// Body-parser Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-//API Routes
-app.use('/api', require('./routes/api/api_routes'));
-
 //Login Routes
+app.use('/login', require('./routes/app/login'));
 
-app.listen(PORT,() => console.log(`Server started on port ${PORT}`));
+//API Routes
+app.use('/api', require('./routes/app/api'));
+
+app.listen(PORT,"127.0.0.2",() => console.log(`Server started on port ${PORT}`));

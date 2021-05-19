@@ -3,12 +3,12 @@ const uuid = require('uuid'); // generate random id for testing POST
 
 const router = express.Router();
 
-const datas = require('../../test_database');
+const database = require('../../test_database');
 
 // Route GET 
 // Get all datas 
 router.get('/',(req, res) => {
-    res.json(datas); // return as .json
+    res.json(database.datas); // return as .json
 })
 
 // Get single data
@@ -16,10 +16,10 @@ router.get('/:id',(req, res) => {
     
     const finding_function = (data) =>  data.id === parseInt(req.params.id);
     // Check if id existes
-    const existed = datas.some(finding_function);
+    const existed = database.datas.some(finding_function);
     if (existed) {
         // Create the resulted array if id existes
-        const resultInfo = datas.filter(finding_function);
+        const resultInfo = database.datas.filter(finding_function);
         res.status(200).json(resultInfo);
     } 
     else {
@@ -42,9 +42,9 @@ router.post('/', (req, res) => {
         });
     }
 
-    datas.push(newData);
+    database.datas.push(newData);
 
-    res.json(datas);
+    res.json(database.datas);
 });
 
 // Route PUT
@@ -52,16 +52,17 @@ router.put('/:id', (req, res) => {
 
     const finding_function = (data) =>  data.id === parseInt(req.params.id);
     // Check if id existes
-    const existed = datas.some(finding_function);
+    const existed = database.datas.some(finding_function);
     if (existed) {
         const updateInfo = req.body;
-        datas.forEach(data => {
+        database.datas.forEach(data => {
             if (data.id === parseInt(req.params.id)) data.info = updateInfo.info;    
             })
         
-        res.json({
+        const edittedDatas = database.datas;
+        res.status(200).json({
             msg : 'Updated data',
-            datas
+            edittedDatas
         });
     }
     else {

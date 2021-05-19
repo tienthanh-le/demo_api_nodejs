@@ -13,4 +13,18 @@ const datas = [
     }
   ];
 
-module.exports = datas;
+const users = [
+  {
+    username: 'admin',
+    password: 'admin'
+  },
+  {
+    username: 'user',
+    password: 'password'
+  }
+]
+
+module.exports = {
+  datas,
+  users
+}
